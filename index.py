@@ -3,7 +3,7 @@ from dotenv import dotenv_values
 from flask import Flask, jsonify
 from flask.cli import AppGroup
 
-from auth import AuthError
+from auth import AuthError, deserialize_token
 from client import get_token
 from decorator_blueprint import decorator_bp
 
@@ -19,7 +19,7 @@ auth_cli = AppGroup('auth')
 def login_auth0():
     response = get_token(config)
     print("*" * 20)
-    print(response)
+    print(deserialize_token(response.get('access_token')))
 
 
 APP.cli.add_command(auth_cli)
